@@ -44,7 +44,8 @@ function cadastrar() {
  const aluno = { 
  nome: nome.value, 
  email: email.value, 
- cpf: cpf.value 
+ cpf: cpf.value,
+ senha: senha.value
  }; 
  localStorage.setItem("alunoEnfermagem", JSON.stringify(aluno)); 
  mostrarMensagem("✅ Cadastro realizado com sucesso!", "green"); } 
@@ -55,3 +56,37 @@ console.assert(validarNome("Jo") === false);
 console.assert(validarSenha("123456") === true); 
 console.assert(validarSenha("abc") === false); 
 console.log("✅ Testes OK!"); 
+function login() {
+    const email = document.getElementById("emailLogin");
+    const senha = document.getElementById("senhaLogin");
+
+    // Limpa as cores da tentativa anterior
+    email.classList.remove("erro", "sucesso");
+    senha.classList.remove("erro", "sucesso");
+
+    const aluno = JSON.parse(
+        localStorage.getItem("alunoEnfermagem")
+    );
+
+    if (
+        aluno &&
+        email.value === aluno.email &&
+        senha.value === aluno.senha
+    ) {
+        email.classList.add("sucesso");
+        senha.classList.add("sucesso");
+
+        mostrarMensagem(
+            "✅ Login realizado com sucesso!",
+            "green"
+        );
+    } else {
+        email.classList.add("erro");
+        senha.classList.add("erro");
+
+        mostrarMensagem(
+            "❌ Email ou senha inválidos!",
+            "red"
+        );
+    }
+}
